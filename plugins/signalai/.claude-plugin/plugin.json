@@ -1,0 +1,11 @@
+{
+  "name": "signalai",
+  "displayName": "SignalAI",
+  "version": "0.1.0",
+  "description": "Build, backtest, and inspect trading signals with Claude — playbook skills + the SignalAI MCP connector.",
+  "homepage": "https://signal-ai-mu.vercel.app/docs/connect",
+  "repository": "https://github.com/yashkothari42/signalai-plugins",
+  "keywords": ["trading", "backtest", "signals", "quant"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

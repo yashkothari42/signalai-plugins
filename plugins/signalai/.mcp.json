@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "signalai": {
+      "type": "http",
+      "url": "https://35.94.249.241.sslip.io/mcp/"
+    }
+  }
+}

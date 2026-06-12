@@ -1,0 +1,11 @@
+{
+  "name": "signalai-plugins",
+  "owner": { "name": "SignalAI", "url": "https://signal-ai-mu.vercel.app" },
+  "plugins": [
+    {
+      "name": "signalai",
+      "source": "./plugins/signalai",
+      "description": "Build, backtest, and inspect trading signals with Claude."
+    }
+  ]
+}
