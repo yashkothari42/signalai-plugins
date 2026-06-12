@@ -35,6 +35,11 @@ Key API:
 The engine prevents lookahead (orders never fill on data they couldn't have seen) —
 but **your logic can still curve-fit**. Keep rules simple and economically motivated.
 
+Make sure the source defines a `Strategy` subclass (with an `init()` that subscribes to
+something) before submitting — an invalid strategy fails at run-time with
+`status: "error"`. (CLI users can verify it builds locally first with
+`signalai check <file>`.)
+
 ## 2. Submit and poll
 
 Call `submit_backtest(strategy_src=<the code>, symbols=["AAPL"], start="2015-01-01",
