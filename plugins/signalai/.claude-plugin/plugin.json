@@ -1,11 +1,24 @@
 {
   "name": "signalai",
   "displayName": "SignalAI",
-  "version": "0.1.0",
-  "description": "Build, backtest, and inspect trading signals with Claude — playbook skills + the SignalAI MCP connector.",
+  "version": "202606170439",
+  "description": "Build, backtest, and inspect trading signals with Claude. Playbook skills plus the SignalAI MCP connector.",
+  "author": {
+    "name": "SignalAI",
+    "url": "https://signal-ai-mu.vercel.app"
+  },
   "homepage": "https://signal-ai-mu.vercel.app/docs/connect",
   "repository": "https://github.com/yashkothari42/signalai-plugins",
-  "keywords": ["trading", "backtest", "signals", "quant"],
+  "license": "UNLICENSED",
+  "keywords": [
+    "trading",
+    "backtest",
+    "signals",
+    "strategies",
+    "quant",
+    "finance"
+  ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "hooks": "./hooks/hooks.json"
 }

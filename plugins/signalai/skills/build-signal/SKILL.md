@@ -36,3 +36,9 @@ Based on `phase`:
 
 When the conversation gets visual or stuck, offer the `build_url` so the user can
 finish in the richer web UI — the session is shared.
+
+## If a signal already exists but is broken
+
+Don't rebuild blindly. If the user says an existing signal is empty, stalled, or
+not updating, switch to the **debug-signal** skill first — it diagnoses from the
+signal's status + history before deciding whether a rebuild is even the fix.
