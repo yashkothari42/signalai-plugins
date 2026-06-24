@@ -19,10 +19,11 @@ history and is evaluated by a *backtest*. Build signals first; strategies consum
 `get_signal_history` (recent datapoints), `create_signal_from_prompt` /
 `send_signal_session_message` (interactive build).
 
-**Backtests:** `submit_backtest` (queue a run → `backtest_id`), `get_backtest`
-(poll status + `summary_stats`), `list_backtests` (recent runs).
+**Backtests:** `run_backtest` (run a saved strategy by reference → `backtest_id`),
+`get_backtest` (poll status + `summary_stats`), `list_backtests` (recent runs).
 
-**Strategies:** `list_strategies`, `get_strategy` (saved decision logic).
+**Strategies:** `save_strategy` (store an authored strategy / new version),
+`list_strategies`, `get_strategy` (saved strategies + trading type).
 
 ## Which skill to use
 

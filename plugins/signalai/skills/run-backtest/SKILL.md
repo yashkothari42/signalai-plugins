@@ -16,18 +16,20 @@ Before spending a run, settle:
 - **Resolution** — `daily` for long-horizon ideas; `minute` for intraday (intraday has
   per-day reset + flat-overnight semantics).
 
-If the strategy was just written, confirm it builds (see **build-strategy** /
-`signalai check`) — submitting a strategy that doesn't build wastes a run and returns
-`status: "error"`.
+Backtests run **by reference** to a saved, versioned strategy — never inline code. If
+the strategy isn't saved yet, save it first with **build-strategy** (`save_strategy`),
+which returns a `strategy_id`. The first run is also what proves the code executes.
 
-## 2. Submit and poll
+## 2. Run and poll
 
 ```text
-submit_backtest(strategy_src=<the code>, symbols=["AAPL"],
-                start="2015-01-01", end="2024-12-31", resolution="daily")
+run_backtest(strategy_id=<id>, symbols=["AAPL"],
+             start="2015-01-01", end="2024-12-31", resolution="daily",
+             params={...})   # a value for every required declared param
 ```
 
-Returns `{backtest_id, status: "queued"}`. Then poll `get_backtest(backtest_id)` until
+`version` is optional (defaults to the latest). Returns `{backtest_id, status:
+"queued"}`. Then poll `get_backtest(backtest_id)` until
 `status == "done"` (or `"error"` — report the `error`). Don't spam it; a few seconds
 between polls is plenty.
 
