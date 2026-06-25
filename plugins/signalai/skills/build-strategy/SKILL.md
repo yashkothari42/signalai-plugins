@@ -34,15 +34,16 @@ user would actually trade it.
 
 ## 2. Write the code
 
-Subclass the type's base class. Declare any tunable as a `ParamSpec` (so it becomes a
-required, validated input at run time — read it with `self.param(name)`):
+Subclass the type's base class. Declare any tunable as a **class-level `Parameter`**
+descriptor (`Parameter.Int/Float/Bool/Enum`); reading `self.<name>` resolves to the
+run value (or the default), so it just reads as the number/choice everywhere:
 
 ```python
-from signalai_quant import SwingStrategy, Bar, Side, ParamSpec, IntParam
+from signalai_quant import SwingStrategy, Bar, Side, Parameter
 
 
 class Momentum(SwingStrategy):
-    params = ParamSpec(lookback=IntParam(default=20, min=2, max=200))
+    lookback = Parameter.Int(default=20, min=2, max=200)   # read as self.lookback
 
     def init(self):
         # self.universe is the symbols the RUN configures — never hard-code symbols.
@@ -52,7 +53,7 @@ class Momentum(SwingStrategy):
     def on_bar(self, bar: Bar):
         h = self.history[bar.symbol]
         h.append(bar.close)
-        n = self.param("lookback")
+        n = self.lookback
         if len(h) < n:
             return
         avg = sum(h[-n:]) / n
@@ -69,7 +70,9 @@ Core API (this is the whole surface — don't invent methods):
   `self.every("7d", cb)` for timers; `self.subscribe(OrderEvent, handler)` for fills.
 - `self.order(symbol, Side.BUY|SELL, qty)` — the one order primitive (market by
   default). There is no `set_holdings`; size by computing a quantity.
-- `self.param(name)` — the run-time value of a declared parameter.
+- **Parameters** — declare as class attrs: `lookback = Parameter.Int(default, min, max)`
+  (also `Parameter.Float`, `Parameter.Bool`, `Parameter.Enum(choices=[...], default=…)`;
+  no free-text string). Read with `self.lookback` — it resolves to the run value or default.
 - `self.universe` — the run's symbols. `self.portfolio[symbol].qty` — current position;
   `self.portfolio.equity(self._last_prices)` — equity for sizing.
 - A `DayStrategy` uses the same API; just never assume overnight carry.
