@@ -10,8 +10,9 @@ them, and **backtest** strategies on real historical market data — all from Cl
 via the connected MCP tools. Everything is scoped to the signed-in user's account.
 
 **Signal vs strategy:** a *signal* is a scheduled number stream (e.g. "AAPL 20-day
-momentum, daily"). A *strategy* is Python decision logic that trades over price/signal
-history and is evaluated by a *backtest*. Build signals first; strategies consume them.
+momentum, daily"). A *strategy* is a **Rust** trading rule (for the native Rust engine)
+that trades over price/signal history and is evaluated by a *backtest*. Build signals
+first; strategies consume them.
 
 ## The tools, grouped
 
