@@ -81,7 +81,8 @@ Core API — the whole surface, don't invent methods:
   `ctx.equity()` → f64; `ctx.position(sym)` → `Qty` (use `.is_zero()`, `.as_f64()`);
   `ctx.last_price(sym)` → `Price`.
 - **Fixed-point newtypes**: `Price`/`Qty` — read with `.as_f64()`, build with
-  `Price::from_f64(x)` / `Qty::shares(n)`. `bar.close.as_f64()`.
+  `Price::from_f64(x)` / `Qty::shares(n)` (**`shares` takes `f64`** — passing i64 is E0308).
+  `bar.close.as_f64()`.
 - **Indicators** (incremental, lookahead-free) — **`.update(x)` return type differs per
   indicator, do NOT assume `Option`:**
   - `indicators::Sma::new(n)` → `Option<f64>` (`None` until `n` samples).
