@@ -26,8 +26,15 @@ which returns a `strategy_id`. The first run is also what proves the code execut
 run_backtest(strategy_id=<id>, symbols=["AAPL"],
              start="2015-01-01", end="2024-12-31", resolution="daily",
              params={...},        # a value for every required declared param
-             signals=["my-sig"])  # ONLY if the strategy subscribes to signals
+             signals=["my-sig"],  # ONLY if the strategy subscribes to signals
+             execution={"preset": "retail"})  # cost model — see below
 ```
+
+**Execution costs (`execution`)**: `{"preset": "retail"}` models a $0-commission broker with US
+regulatory fees + realistic slippage/spread — **use it by default** so returns are honest. Other
+presets: `ibkr-pro` (per-share commission), `conservative` (higher impact, small caps), `zero`
+(frictionless — only for comparing against an older zero-cost run), `custom` (+field overrides).
+Results include `total_fees` and `total_slippage_cost` — mention the cost drag when reporting.
 
 `version` is optional (defaults to the latest). If the strategy uses
 `ctx.subscribe_signal`/`on_signal`, you MUST pass the signal names in `signals` —

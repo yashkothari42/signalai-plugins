@@ -111,6 +111,14 @@ Core API — the whole surface, don't invent methods:
   lookahead; on_signal orders fill next bar open. The RUN must name the signals: pass
   `signals: ["name"]` to `run_backtest` (else no events arrive). The submit 400s if a named
   signal has no datapoints in the range.
+- **Corporate actions (automatic)**: `on_corporate_action(&mut self, ctx, ca: &CorpAction)` fires
+  at ex-dates before that day's bar; `ca.kind` = `CorpActionKind::Split{from,to}` |
+  `Dividend{amount}`. Dividends auto-credit cash for held positions (no code needed to earn them);
+  splits are informational — never adjust share counts (adjusted prices encode them).
+- **Fundamentals (automatic, point-in-time at FILING date)**: `on_fundamentals(&mut self, ctx,
+  f: &Fundamentals)` — `f.period`, `f.fields: BTreeMap<String, f64>` (revenues/net_income/
+  eps_basic/eps_diluted/shares_basic/assets/liabilities/equity/operating_cash_flow; a metric may
+  be absent — use `.get()`, never index). Store what you need; e.g. latest eps → P/E in on_bar.
 - **Multi-symbol** is safe: `for s in ctx.universe() { … ctx.order(s, …) }` — `universe()`
   is owned, so ordering inside the loop does not conflict.
 
