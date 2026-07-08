@@ -103,7 +103,9 @@ Core API — the whole surface, don't invent methods:
   - `indicators::RollingWindow::new(n)` → `.update(x)` returns `()`; read `.mean() .std()
     .min() .max() .last() .len()`.
 - **SignalAI signals as inputs**: `ctx.subscribe_signal("name")` in `init`; implement
-  `on_signal(&mut self, ctx, sig: &SignalValue)` (`sig.name`/`sig.ts`/`sig.value`). Push-only —
+  `on_signal(&mut self, ctx, sig: &SignalValue)` (`sig.name`/`sig.key`/`sig.ts`/`sig.value`;
+  `sig.key: Option<String>` is set for keyed signals — several sub-series per timestamp, match
+  with `sig.key.as_deref() == Some("X")`; `None` = scalar). Push-only —
   NO `ctx.signal()` reader exists; to use the value in `on_bar`, store it in a struct field
   (`last_value: Option<f64>` set in `on_signal`). Points interleave with bars by ts — no
   lookahead; on_signal orders fill next bar open. The RUN must name the signals: pass

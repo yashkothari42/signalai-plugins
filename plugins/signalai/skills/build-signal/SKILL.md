@@ -5,15 +5,21 @@ description: Build a new SignalAI data signal through the interactive builder. U
 
 # Build a signal with SignalAI
 
-A signal is a scheduled number stream from a data source. Building one runs an
-interactive agent session — drive it with two tools.
+A signal is a scheduled number stream from a data source — ANY scored time-series,
+not just equities: crypto prices, prediction-market odds (Kalshi/Polymarket),
+sports odds, macro/weather series, on-chain or web metrics. A signal can also be
+**keyed** — one signal holding several sub-series per timestamp (team → win %,
+contract → odds, strike → IV) — mention the per-entity shape in the prompt and the
+builder will propose it. Building one runs an interactive agent session — drive it
+with two tools.
 
 ## Start the build
 
 Call `create_signal_from_prompt(prompt=<clear description>)`. A good prompt names the
 **source/metric**, the **cadence**, and any **transform**, e.g.
-"BTC price in USD from Coinbase, every minute" or "AAPL % deviation from its 20-day
-mean, daily". It returns:
+"BTC price in USD from Coinbase, every minute", "AAPL % deviation from its 20-day
+mean, daily", or "World Cup win probability per team from Kalshi, hourly (keyed by
+team)". It returns:
 
 - `session_id` — keep it for follow-ups.
 - `agent_message` — show this to the user verbatim.
