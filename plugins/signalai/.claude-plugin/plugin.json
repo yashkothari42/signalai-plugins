@@ -1,7 +1,7 @@
 {
   "name": "signalai",
   "displayName": "SignalAI",
-  "version": "202607072209",
+  "version": "202607080129",
   "description": "Build, backtest, and inspect trading signals with Claude. Playbook skills plus the SignalAI MCP connector.",
   "author": {
     "name": "SignalAI",

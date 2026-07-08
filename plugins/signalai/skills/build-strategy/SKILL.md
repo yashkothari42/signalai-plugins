@@ -89,6 +89,16 @@ Core API — the whole surface, don't invent methods:
   - `indicators::Ema::new(n)` → **plain `f64`** (emits from bar 1, NOT `Option`). Bind it
     directly (`let ema = self.ema.update(x);`); `let Some(ema) = self.ema.update(x)` is a
     TYPE ERROR (E0308). EMA has no built-in warmup — gate crossovers with your own bar counter.
+  - `indicators::Macd::new(fast, slow, signal)` → `Option<MacdValue>` (`None` until `slow`
+    samples; fields `.macd .signal .histogram`).
+  - `indicators::Bollinger::new(n, k)` → `Option<BollingerValue>` (`None` until `n`; fields
+    `.upper .middle .lower` = SMA ± k·σ).
+  - `indicators::Atr::new(n)` → `.update(high, low, close) -> Option<f64>` (Wilder; note the
+    THREE-argument update).
+  - `indicators::Vwap::new()` → `.update(price, volume) -> Option<f64>` (cumulative; call
+    `.reset()` at each session open in DAY strategies).
+  - `indicators::Stochastic::new(k_period, d_period)` → `.update(high, low, close) ->
+    Option<StochasticValue>` (fields `.k .d`).
   - `indicators::RollingWindow::new(n)` → `.update(x)` returns `()`; read `.mean() .std()
     .min() .max() .last() .len()`.
 - **Multi-symbol** is safe: `for s in ctx.universe() { … ctx.order(s, …) }` — `universe()`
