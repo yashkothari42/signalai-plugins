@@ -25,11 +25,16 @@ which returns a `strategy_id`. The first run is also what proves the code execut
 ```text
 run_backtest(strategy_id=<id>, symbols=["AAPL"],
              start="2015-01-01", end="2024-12-31", resolution="daily",
-             params={...})   # a value for every required declared param
+             params={...},        # a value for every required declared param
+             signals=["my-sig"])  # ONLY if the strategy subscribes to signals
 ```
 
-`version` is optional (defaults to the latest). Returns `{backtest_id, status:
-"queued"}`. Then poll `get_backtest(backtest_id)` until
+`version` is optional (defaults to the latest). If the strategy uses
+`ctx.subscribe_signal`/`on_signal`, you MUST pass the signal names in `signals` —
+otherwise no signal events reach it. The submit fails clearly if a named signal has
+no datapoints in the range; the result's `params.signals` shows the coverage the run
+saw ({points, first, last} per signal) — mention it when reporting. Returns
+`{backtest_id, status: "queued"}`. Then poll `get_backtest(backtest_id)` until
 `status == "done"` (or `"error"` — report the `error`). Don't spam it; a few seconds
 between polls is plenty.
 

@@ -102,6 +102,12 @@ Core API — the whole surface, don't invent methods:
     Option<StochasticValue>` (fields `.k .d`).
   - `indicators::RollingWindow::new(n)` → `.update(x)` returns `()`; read `.mean() .std()
     .min() .max() .last() .len()`.
+- **SignalAI signals as inputs**: `ctx.subscribe_signal("name")` in `init`; implement
+  `on_signal(&mut self, ctx, sig: &SignalValue)` (`sig.name`/`sig.ts`/`sig.value`); read the
+  latest anywhere via `ctx.signal("name") -> Option<f64>` (None before the first point). Points
+  interleave with bars by ts — no lookahead; on_signal orders fill next bar open. The RUN must
+  name the signals: pass `signals: ["name"]` to `run_backtest` (else no events arrive). The
+  submit 400s if a named signal has no datapoints in the range.
 - **Multi-symbol** is safe: `for s in ctx.universe() { … ctx.order(s, …) }` — `universe()`
   is owned, so ordering inside the loop does not conflict.
 
